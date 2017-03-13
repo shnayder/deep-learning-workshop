@@ -11,13 +11,28 @@ Work-in-progress notebooks, to be used in a deep learning workshop I'm putting t
 - 03 - monitoring performance, validation sets, etc -- illustrate what's going on above. Keras.
 - 03.5 - Tuning -- dropout. Weight penalties.
 - 04 - CPU GPU. Keras.
-- 05 - TF demo. Same dataset. Include TensorBoard.
-- 06 - Theano demo (?). Same dataset.
+- 05 - TF demo. Same dataset.
 
 ## CNNs
 
 - 01 - intro -- Keras, notmnist
 - 02 - data augmentation demo
+
+## Text, RNN, LSTM
+
+- TBD
+
+## RL
+
+- TBD
+
+## Autoencoders
+
+- TBD
+
+## Tuning and exploration
+
+- 01 - cars
 
 ## Datasets
 
