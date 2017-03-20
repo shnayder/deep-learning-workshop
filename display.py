@@ -7,7 +7,7 @@ Display utilities.
 # and installed the graphviz OS X package with binary libraries
 # to get this to work. May not actually need the pydot downgrade...)
 from IPython.display import SVG
-from keras.utils.visualize_util import model_to_dot
+from keras.utils.vis_utils import model_to_dot
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
