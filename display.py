@@ -9,9 +9,14 @@ Display utilities.
 from IPython.display import SVG
 from keras.utils.vis_utils import model_to_dot
 
+import itertools as it
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
+
+from sklearn.metrics import confusion_matrix
+
 
 def visualize_keras_model(model):
     return SVG(model_to_dot(model).create(prog='dot', format='svg'))
@@ -44,3 +49,53 @@ def plot_training_curves(history):
 
     sns.despine(fig)
     return fig
+
+
+def plot_confusion_matrix(labels, predictions,
+                          classes,
+                          normalize=False,
+                          title="Confusion matrix",
+                          cmap=plt.cm.Blues):
+    """
+    Plot a confusion matrix for predictions vs labels.
+    Both should be one-hot.
+
+    Based on.
+    http://scikit-learn.org/stable/auto_examples/model_selection/plot_confusion_matrix.html
+    """
+    # convert from one-hot
+    cat_labels = np.argmax(labels, axis=1)
+    cat_predicts = np.argmax(predictions, axis=1)
+
+    cm = confusion_matrix(cat_labels, cat_predicts)
+
+    if normalize:
+        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+        print("Normalized confusion matrix")
+    else:
+        print('Confusion matrix, without normalization')
+
+    plt.imshow(cm, interpolation='nearest', cmap=cmap)
+    plt.title(title)
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=45)
+    plt.yticks(tick_marks, classes)
+
+
+    #print(cm)
+
+    thresh = cm.max() / 2.
+    for i, j in it.product(range(cm.shape[0]), range(cm.shape[1])):
+        if 0 < cm[i,j] < 1:
+            val = "{:.2f}".format(cm[i,j])
+        else:
+            val = cm[i,j]
+        plt.text(j, i, val,
+                 horizontalalignment="center",
+                 color="white" if cm[i, j] > thresh else "black")
+
+    plt.tight_layout()
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
+    return cm
