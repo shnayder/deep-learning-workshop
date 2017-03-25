@@ -7,6 +7,8 @@ Display utilities.
 # and installed the graphviz OS X package with binary libraries
 # to get this to work. May not actually need the pydot downgrade...)
 from IPython.display import SVG
+
+# TODO: support Keras 2 and earlier
 from keras.utils.vis_utils import model_to_dot
 
 import itertools as it
@@ -33,15 +35,18 @@ def plot_training_curves(history):
         mpl figure.
     """
     fig, (ax_acc, ax_loss) = plt.subplots(1, 2, figsize=(8,2))
-    ax_acc.plot(history['acc'], label='acc')
-    ax_acc.plot(history['val_acc'], label='Val acc')
-    ax_acc.set_xlabel('epoch')
-    ax_acc.set_ylabel('accuracy')
-    ax_acc.legend(loc='upper left')
-    ax_acc.set_title('Accuracy')
+    if 'acc' in history:
+        ax_acc.plot(history['acc'], label='acc')
+        if 'val_acc' in history:
+            ax_acc.plot(history['val_acc'], label='Val acc')
+        ax_acc.set_xlabel('epoch')
+        ax_acc.set_ylabel('accuracy')
+        ax_acc.legend(loc='upper left')
+        ax_acc.set_title('Accuracy')
 
     ax_loss.plot(history['loss'], label='loss')
-    ax_loss.plot(history['val_loss'], label='Val loss')
+    if 'val_loss' in history:
+        ax_loss.plot(history['val_loss'], label='Val loss')
     ax_loss.set_xlabel('epoch')
     ax_loss.set_ylabel('loss')
     ax_loss.legend(loc='upper right')
