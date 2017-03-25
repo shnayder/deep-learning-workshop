@@ -13,7 +13,7 @@ try:
     from keras.utils.vis_utils import model_to_dot
 except ImportError:
     # 1.x had a different module name.
-    from keras.utils.visualize_utils import model_to_dot
+    from keras.utils.visualize_util import model_to_dot
     
 
 import itertools as it
